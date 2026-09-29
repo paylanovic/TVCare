@@ -7,3 +7,6 @@
 *.cmd text eol=crlf
 *.apk binary
 *.png binary
+
+# Preserve upstream license bytes exactly; SOURCES.json verifies their SHA-256.
+third_party/licenses/** -text

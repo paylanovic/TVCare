@@ -31,7 +31,7 @@ jobs:
         env:
           HOMEBREW_NO_AUTO_UPDATE: '1'
         run: |
-          brew list python@3.12 >/dev/null 2>&1 || brew install python@3.12
+          brew list python@3.12 >/dev/null 2>&1 || brew install --skip-link python@3.12
           "$(brew --prefix python@3.12)/bin/python3.12" -m venv "$RUNNER_TEMP/tvcare-build"
           echo "$RUNNER_TEMP/tvcare-build/bin" >> "$GITHUB_PATH"
       - name: Install build dependencies

@@ -114,7 +114,7 @@ def main(argv=None):
     for notice in license_manifest['sources']:
         source = license_source / notice['file']
         if source.parent != license_source or hashlib.sha256(source.read_bytes()).hexdigest() != notice['sha256']:
-            raise RuntimeError('An upstream runtime license notice is missing or has changed.')
+            raise RuntimeError('An upstream runtime license notice is missing or has changed: ' + notice['file'])
     license_target = bundle / 'third_party' / 'licenses'
     license_target.mkdir(parents=True, exist_ok=True)
     for source in sorted(license_source.iterdir()):
