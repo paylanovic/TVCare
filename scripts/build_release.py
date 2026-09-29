@@ -57,9 +57,24 @@ def run_tests():
 
 def write_launchers(bundle):
     if os.name == 'nt':
-        for name, arguments in [('Start-TVCare.cmd', ''), ('Demo-TVCare.cmd', '--demo ')]:
-            (bundle / name).write_text('@echo off\n"%~dp0TVCare.exe" ' + arguments + '%*\nif errorlevel 1 pause\n',
-                                       encoding='utf-8', newline='\r\n')
+        launchers = {
+            'Start-TVCare.cmd': ('if /I "%~1"=="--demo" goto run\n'
+                                '"%~dp0TVCare.exe" --setup\n'
+                                'if errorlevel 1 goto failed\n'
+                                ':run\n'
+                                '"%~dp0TVCare.exe" %*\n'
+                                'if errorlevel 1 goto failed\nexit /b 0\n'),
+            'Install-Requirements.cmd': ('"%~dp0TVCare.exe" --setup %*\n'
+                                         'if errorlevel 1 goto failed\n'
+                                         'echo.\necho Ready. Open Start-TVCare.cmd to use TVCare.\n'
+                                         'pause\nexit /b 0\n'),
+            'Demo-TVCare.cmd': ('"%~dp0TVCare.exe" --demo %*\n'
+                               'if errorlevel 1 goto failed\nexit /b 0\n'),
+        }
+        for name, body in launchers.items():
+            (bundle / name).write_text('@echo off\nchcp 65001 >nul\n' + body +
+                                      ':failed\necho.\necho TVCare could not complete this step.\n'
+                                      'pause\nexit /b 1\n', encoding='utf-8', newline='\r\n')
     else:
         extension = '.command' if sys.platform == 'darwin' else '.sh'
         for name, arguments in [('TVCare', ''), ('Demo-TVCare', '--demo ')]:

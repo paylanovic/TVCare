@@ -2,11 +2,11 @@
 
 Bu rehber hazır TVCare paketini ilk kez kullanmak içindir. **Android TV veya Google TV** gerekir; Samsung Tizen ve LG webOS desteklenmez. AI hesabına ihtiyacın yok.
 
-TVCare 1.0.0 **Public Preview**, herkese açık ön sürümdür. Hazır paket, belirli bir TV’de bakımın doğrulandığı anlamına gelmez. [Test kapsamı](VERIFICATION.md)
+TVCare 1.0.1 **Public Preview**, herkese açık ön sürümdür. Hazır paket, belirli bir TV’de bakımın doğrulandığı anlamına gelmez. [Test kapsamı](VERIFICATION.md)
 
 ## 1. Paketi indir ve çıkar
 
-[TVCare 1.0.0 indirme sayfasını aç](https://github.com/paylanovic/TVCare/releases/tag/v1.0.0). **Assets** bölümündeki TVCare ZIP dosyalarından işletim sistemin ve işlemcinle eşleşeni seç. GitHub’ın otomatik **Source code** arşivleri hazır uygulama değildir.
+[TVCare 1.0.1 indirme sayfasını aç](https://github.com/paylanovic/TVCare/releases/tag/v1.0.1). **Assets** bölümündeki TVCare ZIP dosyalarından işletim sistemin ve işlemcinle eşleşeni seç. GitHub’ın otomatik **Source code** arşivleri hazır uygulama değildir.
 
 | Sistem | Paket adında ara | Başlatıcı |
 |---|---|---|
@@ -18,13 +18,26 @@ Paketin tamamını bir klasöre çıkar. İçindeki dosyaları birbirinden ayır
 
 Mac’te **Bu Mac Hakkında**, Windows’ta **Ayarlar → Sistem → Hakkında** ekranından işlemci türünü görebilirsin. Apple Silicon genellikle `arm64`, Intel/AMD 64 bit bilgisayarlar `x86_64` veya `AMD64` olarak adlandırılır.
 
-## 2. TV bağlantı aracını ekle
+## 2. Windows’ta çift tıkla ve gereksinimleri hazırla
 
-TVCare, TV ile **ADB** üzerinden iletişim kurar. Varsayılan paket ADB içermez; Google’ın resmî paketini bir kez indirmen gerekir.
+**Windows kullanıyorsan `Start-TVCare.cmd` dosyasına çift tıklaman yeterli.** Bu başlatıcı önce gereksinimleri kontrol eder, sonra uygulamayı açar.
 
-1. [Android Platform Tools indirme sayfasını aç](https://developer.android.com/tools/releases/platform-tools).
+- Kullanılabilir ADB zaten kuruluysa onu kullanır; tekrar indirmez.
+- ADB eksikse Google’ın SDK lisans koşullarını gösterir ve kabulünü ister. Kabul ettiğinde resmî Google sunucusundan sabitlenmiş Platform Tools paketini indirir, SHA-256 özetini kontrol eder ve çıkarır.
+- Kurulum kullanıcı hesabındaki `%LOCALAPPDATA%\TVCare\tools\platform-tools` konumuna yapılır. Yönetici izni, winget, Python veya ayrı bir yükleyici gerekmez.
+- Kurulum başarılıysa TVCare tarayıcıda açılır. Lisansı kabul etmezsen indirme yapılmaz. Kurulum hata verirse hata açıklaması görünür; tamamlanmamış kurulum başarılı sayılmaz.
+
+**İlk indirme için internet gerekir.** Sonraki açılışlarda kullanılabilir ADB varsa tekrar indirilmez. Uygulamanın normal TV bakım akışı bulut hizmeti gerektirmez; TV bağlantısı yerel ağından yapılır.
+
+Sadece ADB’yi hazırlamak ve uygulamayı sonra açmak için **`Install-Requirements.cmd`** dosyasına çift tıkla. Bu dosya gereksinimleri kurar; tarayıcı arayüzünü açmaz.
+
+### macOS / Linux veya elle ADB kurulumu
+
+macOS ve Linux için ADB kurulumu elle yapılır. Windows’ta da aşağıdaki yöntem bir alternatiftir:
+
+1. [Google’ın resmî Android Platform Tools sayfasını aç](https://developer.android.com/tools/releases/platform-tools).
 2. Kendi işletim sisteminin ZIP dosyasını indir ve çıkar.
-3. Çıkan **`platform-tools` klasörünün tamamını** TVCare çalıştırılabilir dosyasının yanına taşı. Yalnızca `adb` dosyasını kopyalama; paketteki yardımcı dosyalar da gerekebilir.
+3. Çıkan **`platform-tools` klasörünün tamamını** TVCare çalıştırılabilir dosyasının yanına taşı. Yalnızca `adb` dosyasını kopyalama; yardımcı dosyalar da gerekebilir.
 
 ```text
 TVCare/
@@ -36,11 +49,11 @@ TVCare/
 └── ...TVCare paketinin diğer dosyaları
 ```
 
-TVCare bu konumu otomatik bulur. Daha önce kurulmuş ve erişilebilir Android SDK / PATH konumları da desteklenir. Paketli sürümde `_internal/platform-tools`, kaynak sürümde proje kökündeki `platform-tools` klasörü de kullanılabilir.
+TVCare bu konumu otomatik bulur. Var olan Android SDK / PATH konumları da desteklenir. Paketli sürümde `_internal/platform-tools`, kaynak sürümde proje kökündeki `platform-tools` klasörü de kullanılabilir.
 
-## 3. TVCare’i aç
+## 3. Uygulamayı açık tut
 
-İşletim sistemine uygun başlatıcıyı çalıştır. Tarayıcıda TVCare açılır. Terminal penceresi uygulamanın çalışmasını sağlar; bakım bitene kadar açık bırak.
+Windows başlatıcısı kurulumdan sonra TVCare’i otomatik açar. macOS / Linux’ta ADB klasörünü ekledikten sonra sistemine uygun başlatıcıyı çalıştır. Tarayıcıda TVCare görünür. Terminal penceresi uygulamanın çalışmasını sağlar; bakım bitene kadar açık bırak.
 
 Linux’ta dosya yöneticisi başlatıcıyı çalıştırmıyorsa, çıkardığın TVCare klasöründe terminal aç:
 
@@ -100,7 +113,8 @@ Koruyucunun çalışması için hata ayıklama açık kalmalı ve TV’de koruyu
 
 | Ekrandaki durum | Yapılacak işlem |
 |---|---|
-| **ADB bulunamadı** | İşletim sistemine uygun `platform-tools` klasörünün doğru yerde olduğundan emin ol; TVCare’i yeniden başlat. |
+| **ADB bulunamadı** | Windows’ta `Install-Requirements.cmd` dosyasını çalıştır. macOS/Linux’ta işletim sistemine uygun `platform-tools` klasörünün doğru yerde olduğunu kontrol et. Sonra TVCare’i yeniden başlat. |
+| **Gereksinim indirmesi başarısız** | İnternet bağlantısını ve gösterilen hata mesajını kontrol et; `Install-Requirements.cmd` ile yeniden dene. Özet doğrulama hatasını atlama; gerekirse resmî Platform Tools paketini elle kur. |
 | **Unauthorized / izin bekleniyor** | TV ekranındaki bilgisayar iznini onayla ve cihaz listesini yenile. |
 | **Offline / çevrimdışı** | TV’nin açık olduğunu, ağını ve adres/port bilgisini kontrol et. |
 | **Bağlantı zaman aşımı** | Aynı yerel ağda olduğunu ve TV’nin ağ ADB’sini desteklediğini doğrula. |
@@ -121,7 +135,9 @@ Koruyucunun çalışması için hata ayıklama açık kalmalı ve TV’de koruyu
 .\TVCare.exe --demo
 ```
 
-**ÖRNEK MODU** sentetik cihaz kullanır; gerçek TV’ye bağlanmaz. Demo sonuçları fiziksel test kanıtı değildir.
+Paket içindeki **Demo-TVCare.cmd** (Windows), **Demo-TVCare.command** (macOS) veya **Demo-TVCare.sh** (Linux) dosyasını da açabilirsin.
+
+**ÖRNEK MODU** sentetik cihaz kullanır; gereksinim indirmez, ağdan kurulum yapmaz ve gerçek TV’ye bağlanmaz. Demo sonuçları fiziksel test kanıtı değildir.
 
 ## Destek isterken
 

@@ -1,6 +1,6 @@
-# TVCare dağıtımı
+# TVCare 1.0.1 dağıtımı
 
-TVCare'in çalışma zamanında AI, bulut hesabı veya Python paketi indirmesi gerekmez. Kaynaktan çalıştırma Python 3.10+ gerektirir. Tek klasör dağıtımı Python yorumlayıcısını içerir. İlk dağıtım konsol penceresiyle çalışır; yerel tarayıcı arayüzü açılır. macOS'ta `TVCare.command`, Windows'ta `Start-TVCare.cmd` çift tıklanabilir başlatıcıdır; hata olursa pencere açık kalır. Program çalışırken terminali açık tutun; kapatmak için Ctrl+C kullanın. macOS paketi noter onaylı `.app` değildir.
+TVCare'in bakım akışı AI, bulut hesabı veya Python paketi indirmesi gerektirmez. Windows'ta ilk açılışta ADB eksikse ayrı gereksinim kurulumu internet kullanır. Kaynaktan çalıştırma Python 3.10+ gerektirir. Tek klasör dağıtımı Python yorumlayıcısını içerir. İlk dağıtım konsol penceresiyle çalışır; yerel tarayıcı arayüzü açılır. macOS'ta `TVCare.command`, Windows'ta `Start-TVCare.cmd` çift tıklanabilir başlatıcıdır; Windows başlatıcısı önce `--setup` ile gereksinimleri hazırlar, başarılıysa uygulamayı açar; hata olursa pencere açık kalır. Program çalışırken terminali açık tutun; kapatmak için Ctrl+C kullanın. macOS paketi noter onaylı `.app` değildir.
 
 ## Mevcut makine için paket
 
@@ -18,7 +18,20 @@ Bu depoda bir hedef için derleme yapmış olmak diğer işletim sistemlerinde �
 
 ## ADB
 
-Varsayılan dağıtım Android Platform Tools içermez. Kullanıcı resmi Platform Tools paketini kurabilir veya `TVCARE_ADB` ile mevcut `adb` dosyasını seçebilir. [Android'in resmi indirme sayfası](https://developer.android.com/tools/releases/platform-tools)
+Varsayılan ZIP, Android Platform Tools içermez. **Windows 1.0.1** paketinde iki başlatıcı vardır:
+
+- `Start-TVCare.cmd`: Önce `TVCare.exe --setup`, kurulum başarılıysa normal uygulama.
+- `Install-Requirements.cmd`: Yalnızca `TVCare.exe --setup`; tarayıcı arayüzünü açmaz.
+
+Kurulum kullanılabilir mevcut ADB'yi yeniden kullanır. Eksikse kullanıcıdan Google SDK lisans koşullarını kabul etmesini ister. Kabulden sonra sabitlenmiş resmî Google Platform Tools ZIP'ini indirir ve beklenen SHA-256 özetiyle doğrular. Kullanıcı lisansı reddederse indirme yapılmaz; indirme veya doğrulama hatası başarı sayılmaz.
+
+Dosyalar Windows kullanıcı hesabına, `%LOCALAPPDATA%\TVCare\tools\platform-tools` konumuna kurulur. Yönetici izni, winget veya ayrıca Python gerekmez. İlk indirme internet gerektirir; ADB zaten kullanılabilir durumdaysa indirme tekrarlanmaz. Başlatıcının `--setup` çağrısı TV'ye bakım işlemi uygulamaz.
+
+**macOS ve Linux otomatik ADB indirmez.** Kullanıcı [resmî Platform Tools paketini](https://developer.android.com/tools/releases/platform-tools) indirip `platform-tools` klasörünü TVCare yürütülebilir dosyasının yanına koyar. Mevcut `TVCARE_ADB`, SDK ve PATH konumları da desteklenir. Windows'ta elle kurulum aynı şekilde bir alternatiftir.
+
+Demo başlatıcıları doğrudan `--demo` kullanır: kurulum başlatmaz, ağdan paket indirmez veya gerçek ADB bağlantısı kurmaz. Kaynak koddan Windows kurulumu `py -3 -m tvbakim --setup` ile çalıştırılabilir; normal arayüz ayrı başlatılır.
+
+Yeni Windows ilk kurulum yolunun otomatik CI kapsamı ve temiz Windows sanal makinesi testi farklı kanıtlardır. [Doğrulama kaydında](VERIFICATION.md) ayrı raporlanır; bir hedefin paketlenmesi temiz makine denemesinin yerine geçmez.
 
 İçeriği ve dağıtım hakkı ayrıca kontrol edilmiş yerel bir Platform Tools dizinini açıkça dahil etmek için:
 
@@ -46,6 +59,7 @@ APK kurulumu ve cihaz üzerindeki çalışması ayrı kontrollerdir. `apksigner 
 ## Yayın kabulü
 
 - Her hedef paketi temiz kullanıcı hesabında açın; tanı, demo ve eksik ADB yollarını deneyin.
+- Windows'ta ADB/Python/winget bulunmayan temiz sanal makinede lisans reddi, ilk indirme, başarılı kurulum, çevrimdışı tekrar açılış ve `Install-Requirements.cmd` yolunu ayrı doğrulayın. Bu doğrulama yapılmadan temiz Windows desteğini kanıtlanmış saymayın.
 - Gerçek TV'de her değişiklik için önceki durumu ve geri almayı doğrulayın.
 - Koruyucuyu gerçek uyumlu firmware üzerinde ayrı sınayın.
 - ZIP içeriğinde özel anahtar, kullanıcı raporu, eski `yedek/` veya çalışma günlükleri bulunmadığını doğrulayın.

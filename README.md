@@ -2,9 +2,9 @@
 
 **Android TV ve Google TV için, kontrolü sana bırakan bakım aracı.** Bilgisayarında çalışır ve tarayıcıda açılır. AI hesabı, abonelik veya bulut bağlantısı gerektirmez.
 
-**1.0.0 Public Preview:** İlk herkese açık ön sürüm. Cihaz desteği ve test kapsamını aşağıda incele.
+**1.0.1 Public Preview:** Windows’ta ilk açılışta ADB kurulumunu kolaylaştıran ön sürüm. Cihaz desteği ve test kapsamını aşağıda incele.
 
-[İndir](https://github.com/paylanovic/TVCare/releases/tag/v1.0.0) · [Hızlı başlangıç](docs/QUICKSTART.md) · [English](README.en.md)
+[İndir](https://github.com/paylanovic/TVCare/releases/tag/v1.0.1) · [Hızlı başlangıç](docs/QUICKSTART.md) · [English](README.en.md)
 
 ![TVCare genel bakış ekranı — sentetik örnek cihaz](docs/screenshots/desktop.png)
 
@@ -14,7 +14,7 @@
 
 ### 1. İndir ve ZIP’i çıkar
 
-[TVCare 1.0.0 sürümünün **Assets** bölümünü aç](https://github.com/paylanovic/TVCare/releases/tag/v1.0.0). İşletim sistemin ve işlemcinle eşleşen TVCare ZIP dosyasını indir. ZIP içinden çalıştırma; klasörün tamamını çıkar.
+[TVCare 1.0.1 sürümünün **Assets** bölümünü aç](https://github.com/paylanovic/TVCare/releases/tag/v1.0.1). İşletim sistemin ve işlemcinle eşleşen TVCare ZIP dosyasını indir. ZIP içinden çalıştırma; klasörün tamamını çıkar.
 
 | Bilgisayarın | İndirilecek paket | Açılacak dosya |
 |---|---|---|
@@ -24,21 +24,23 @@
 
 Hazır paketlerde Python kurmana gerek yok. Yalnızca sürüm sayfasında gerçekten yayımlanmış dosyaları kullan; paket listesi ve test durumu sürüm notlarında belirtilir. macOS paketleri Apple tarafından noter onaylı, Windows paketleri yayıncı sertifikasıyla imzalı değildir.
 
-### 2. ADB’yi yanına koy ve başlat
+### 2. Başlat
 
-TVCare’in TV ile iletişim kurması için Google’ın **Android Platform Tools** paketi gerekir. ADB, varsayılan TVCare dağıtımına dahil değildir.
+**Windows:** `Start-TVCare.cmd` dosyasına çift tıkla. Kullanılabilir ADB zaten varsa doğrudan açılır. Yoksa ilk açılışta Google’ın SDK lisans koşulları için onay ister; kabul ettiğinde resmî Platform Tools paketini indirir, SHA-256 özetini doğrular ve kullanıcı hesabına kurar. Ardından TVCare tarayıcıda açılır.
 
-[Resmî Platform Tools sayfasından](https://developer.android.com/tools/releases/platform-tools) kendi işletim sisteminin ZIP dosyasını indir ve çıkar. İçindeki **`platform-tools` klasörünü TVCare uygulamasının yanına koy**:
+İlk kurulumda **internet gerekir**. Yönetici izni, winget veya Python kurulumu gerekmez. Lisansı kabul etmezsen indirme yapılmaz. Yalnızca gereksinimleri hazırlamak istersen `Install-Requirements.cmd` dosyasını aç; bu dosya TVCare arayüzünü başlatmaz.
+
+**macOS / Linux:** [Google’ın resmî Platform Tools sayfasından](https://developer.android.com/tools/releases/platform-tools) kendi işletim sisteminin ZIP dosyasını indir ve çıkar. İçindeki **`platform-tools` klasörünü TVCare uygulamasının yanına koy**, ardından yukarıdaki tabloda belirtilen başlatıcıyı aç. Bu sistemlerde otomatik ADB indirmesi yoktur.
 
 ```text
 TVCare/
-├── TVCare.exe veya TVCare
+├── TVCare
 ├── platform-tools/
-│   └── adb.exe veya adb
+│   └── adb
 └── ...diğer paket dosyaları
 ```
 
-Yukarıdaki tabloda belirtilen başlatıcıyı aç. TVCare, ADB’yi otomatik bulur ve tarayıcıda açılır. Uygulamayı kullanırken terminal penceresi açık kalsın.
+ADB, TVCare ZIP’inin içinde gelmez. Windows’ta kurulum aracı eksikse ayrıca indirir; diğer sistemlerde sen eklersin. Uygulamayı kullanırken terminal penceresi açık kalsın.
 
 ### 3. TV’yi bağla, kontrol et, seç
 
@@ -92,7 +94,7 @@ Paket içindeki **Demo-TVCare.command** (macOS), **Demo-TVCare.cmd** (Windows) v
 .\TVCare.exe --demo
 ```
 
-Demo sentetik cihaz kullanır ve gerçek ADB bağlantısı kurmaz. Arayüzde belirgin **ÖRNEK MODU** etiketi görünür.
+Demo sentetik cihaz kullanır; ağdan indirme yapmaz ve gerçek ADB bağlantısı kurmaz. Arayüzde belirgin **ÖRNEK MODU** etiketi görünür.
 
 ## Kaynak koddan çalıştır
 
@@ -104,7 +106,7 @@ cd TVCare
 python3 -m tvbakim
 ```
 
-Windows’ta son komut yerine `py -3 -m tvbakim` kullanabilirsin. Kaynak sürümde `platform-tools` klasörünü bu README ile aynı dizine koy. Demo için komuta `--demo` ekle.
+Windows’ta önce `py -3 -m tvbakim --setup` ile eksik ADB’yi kurabilir, ardından `py -3 -m tvbakim` ile uygulamayı açabilirsin. macOS/Linux kaynak sürümünde `platform-tools` klasörünü bu README ile aynı dizine koy. Demo için başlatma komutuna `--demo` ekle; demo hiçbir gereksinim indirmez.
 
 ```sh
 python3 -m unittest discover -s tests -v

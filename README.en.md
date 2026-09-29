@@ -2,9 +2,9 @@
 
 **A local maintenance tool for Android TV and Google TV.** Inspect your TV, choose changes, review the plan, and apply only what you approve. Runs on your computer with a browser interface. No AI account, subscription, or cloud service required.
 
-**1.0.0 Public Preview:** An initial public prerelease. Review the compatibility and validation limits below.
+**1.0.1 Public Preview:** A public prerelease with automatic first-run ADB setup on Windows. Review the compatibility and validation limits below.
 
-[Download](https://github.com/paylanovic/TVCare/releases/tag/v1.0.0) · [Türkçe](README.md)
+[Download](https://github.com/paylanovic/TVCare/releases/tag/v1.0.1) · [Türkçe](README.md)
 
 ![TVCare overview — synthetic demo device](docs/screenshots/desktop.png)
 
@@ -12,8 +12,8 @@
 
 ## Get started in three steps
 
-1. **Download and extract.** Open the TVCare 1.0.0 release’s [Assets section](https://github.com/paylanovic/TVCare/releases/tag/v1.0.0) and select the ZIP matching your operating system and CPU. Extract the entire archive; do not run it inside the ZIP. Ready-made packages do not require Python. Only use assets actually listed in the release; see its notes for available builds and verification status.
-2. **Add ADB and launch.** Download your operating system’s ZIP from [Google’s official Android Platform Tools page](https://developer.android.com/tools/releases/platform-tools). Extract it and place the `platform-tools` folder next to the `TVCare` / `TVCare.exe` executable. ADB is not included in the default TVCare package. Start the launcher below; TVCare detects ADB and opens your browser. Keep the terminal open while using it.
+1. **Download and extract.** Open the TVCare 1.0.1 release’s [Assets section](https://github.com/paylanovic/TVCare/releases/tag/v1.0.1) and select the ZIP matching your operating system and CPU. Extract the entire archive; do not run it inside the ZIP. Ready-made packages do not require Python. Only use assets actually listed in the release; see its notes for available builds and verification status.
+2. **Launch.** On **Windows**, double-click `Start-TVCare.cmd`. An existing usable ADB installation is reused. If ADB is missing, accept the displayed Google SDK license terms to let setup download the official Platform Tools package, verify its pinned SHA-256 checksum, and install it for your user account. The browser then opens automatically. **Internet is required for the first download; no administrator access, winget, or Python installation is needed.** Declining the terms cancels the download. `Install-Requirements.cmd` runs setup only, without opening TVCare. On **macOS / Linux**, download and extract [Google’s official Platform Tools](https://developer.android.com/tools/releases/platform-tools), place its `platform-tools` folder next to the `TVCare` executable, and open the launcher below. These platforms do not automatically download ADB. Keep the terminal open while using TVCare.
 3. **Connect and review.** Put your TV and computer on the same local network. Enable the TV’s developer options and supported debugging method. Open **TV bağlantısı** in TVCare, follow the instructions, approve your computer on the TV, and choose **Seç ve kontrol et**. Select maintenance options, review the before/after values, then confirm. Inspection itself does not change settings.
 
 | Operating system | ZIP name includes | Launcher |
@@ -59,7 +59,7 @@ From the extracted package directory:
 .\TVCare.exe --demo
 ```
 
-Demo mode uses a synthetic device, never connects through real ADB, and displays an **ÖRNEK MODU** banner.
+Demo mode uses a synthetic device, downloads nothing, never connects through real ADB, and displays an **ÖRNEK MODU** banner.
 
 ## Run from source
 
@@ -71,7 +71,7 @@ cd TVCare
 python3 -m tvbakim
 ```
 
-On Windows, use `py -3 -m tvbakim` for the last command. Place `platform-tools` beside this README. Add `--demo` to try the synthetic device.
+On Windows, first run `py -3 -m tvbakim --setup` to install missing ADB, then `py -3 -m tvbakim` to launch. On macOS/Linux, place `platform-tools` beside this README. Add `--demo` to the launch command to try the synthetic device without downloading prerequisites.
 
 ```sh
 python3 -m unittest discover -s tests -v

@@ -20,13 +20,25 @@ def main():
         signal.signal(signal.SIGBREAK,interrupt)
     parser=argparse.ArgumentParser(description='TVCare — yerel Android TV bakım aracı')
     parser.add_argument('--version',action='version',version='TVCare '+__version__)
-    parser.add_argument('--demo',action='store_true',help='Sentetik cihaz; gerçek ADB veya TV bağlantısı kullanılmaz')
+    mode=parser.add_mutually_exclusive_group()
+    mode.add_argument('--demo',action='store_true',help='Sentetik cihaz; gerçek ADB veya TV bağlantısı kullanılmaz')
+    mode.add_argument('--setup',action='store_true',help='Windows için eksik bağlantı aracını kur; TV’ye bağlanmadan çık')
+    parser.add_argument('--accept-platform-tools-license',action='store_true',
+                        help='--setup ile Google Android SDK lisansını açıkça kabul et')
     parser.add_argument('--no-browser',action='store_true')
     parser.add_argument('--port',type=int,default=0,help='Yerel port; varsayılan otomatik')
     parser.add_argument('--data-dir',type=Path,help='Özel yerel işlem kayıt klasörü')
     parser.add_argument('--adb',type=Path,help='Kurulu Android Platform Tools adb yürütülebilir dosyası')
     args=parser.parse_args()
     if not 0 <= args.port <= 65535: parser.error('Port 0–65535 aralığında olmalı.')
+    if args.accept_platform_tools_license and not args.setup:
+        parser.error('--accept-platform-tools-license yalnızca --setup ile kullanılabilir.')
+    if args.setup:
+        from tvbakim.setup_tools import run_setup
+        try: return run_setup(args.accept_platform_tools_license,adb_binary=args.adb)
+        except KeyboardInterrupt:
+            print('\nKurulum iptal edildi. Tekrar başlatabilirsiniz.',flush=True)
+            return 130
     directory=args.data_dir or data_directory(args.demo)
     # Never mix synthetic transactions with real device history, including explicit directories.
     if args.demo and args.data_dir: directory=directory/'demo'
@@ -52,4 +64,4 @@ def main():
     finally:
         server.server_close(); app.jobs.close(); store.close()
 
-if __name__=='__main__': main()
+if __name__=='__main__': raise SystemExit(main())

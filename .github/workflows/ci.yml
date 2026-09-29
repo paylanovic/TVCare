@@ -46,6 +46,13 @@ jobs:
           for archive in dist/TVCare-*.zip; do
             python scripts/package_smoke.py --archive "$archive" --output "${archive%.zip}-smoke.json"
           done
+      - name: Install prerequisites from a fresh isolated Windows user directory
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          for archive in dist/TVCare-*.zip; do
+            python scripts/setup_smoke.py --archive "$archive" --output "${archive%.zip}-setup-smoke.json"
+          done
       - name: Preserve verified host archive and evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

@@ -15,6 +15,12 @@ class AdbError(RuntimeError):
     pass
 
 
+def managed_adb_directory():
+    """Per-user Windows tools; never alters the machine PATH or SDK folders."""
+    base = Path(os.environ.get("LOCALAPPDATA") or (Path.home() / "AppData" / "Local"))
+    return base / "TVCare" / "tools" / "platform-tools"
+
+
 def validate_endpoint(endpoint: str) -> str:
     """Accept explicit IPv4, bracketed IPv6 or localhost, always with a port."""
     if not isinstance(endpoint, str) or len(endpoint) > 100:
@@ -52,13 +58,19 @@ class Adb:
     def _locate(binary):
         if binary:
             return shutil.which(str(binary)) or str(Path(binary).expanduser())
+        if os.environ.get("TVCARE_ADB"):
+            configured = os.environ["TVCARE_ADB"]
+            return shutil.which(configured) or str(Path(configured).expanduser())
         executable = "adb.exe" if os.name == "nt" else "adb"
-        candidates = [os.environ.get("TVCARE_ADB")]
+        candidates = []
         if getattr(sys, "frozen", False):
             candidates.append(str(Path(sys.executable).resolve().parent / "platform-tools" / executable))
         if getattr(sys, "_MEIPASS", None):
             candidates.append(str(Path(sys._MEIPASS) / "platform-tools" / executable))
-        candidates.extend([str(Path(__file__).resolve().parent.parent / "platform-tools" / executable), shutil.which("adb")])
+        candidates.append(str(Path(__file__).resolve().parent.parent / "platform-tools" / executable))
+        if os.name == "nt":
+            candidates.append(str(managed_adb_directory() / executable))
+        candidates.append(shutil.which("adb"))
         for name in ("ANDROID_HOME", "ANDROID_SDK_ROOT"):
             if os.environ.get(name):
                 candidates.append(str(Path(os.environ[name]) / "platform-tools" / executable))

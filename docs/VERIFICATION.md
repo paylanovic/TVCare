@@ -1,6 +1,27 @@
 # TVCare doğrulama kaydı
 
-Tarih: 29 Eylül 2026. Ortam: macOS / Apple Silicon, Python 3.14.7. Bu kayıt sentetik ve fiziksel kanıtı ayırır.
+Bu kayıt sentetik, otomatik CI ve fiziksel cihaz kanıtını ayırır.
+
+## 1.0.1 Windows gereksinim kurulumu
+
+Yeni Windows ilk açılış akışı; mevcut ADB'yi kullanmayı veya kullanıcının lisans kabulü sonrası resmî Google Platform Tools paketini sabit SHA-256 özetiyle doğrulayarak kullanıcı hesabına kurmayı amaçlar. Her sürüm paketinin otomatik test kanıtı, ilgili commit’in CI sonucu ve sürüm ekindeki raporlarıdır. Önceki sürümün testleri bu yeni yolun kanıtı değildir; temiz Windows kullanıcı akışı ayrıca değerlendirilir.
+
+| Kontrol | Sonuç | Kapsam |
+| --- | --- | --- |
+| Yerel 1.0.1 birim / entegrasyon ve regresyon testleri | PASS | 111 test başarılı; yaklaşık 8,9 saniye. Kurulum testleri dahil, Windows etkileşimli kullanıcı testi değildir |
+| Windows hedefinde CI test ve paket kontrolü | Sürüm raporuna bak | İlgili commit’in [CI sonucu](https://github.com/paylanovic/TVCare/actions/workflows/ci.yml), paketteki `BUILD.json` ve sürüm ekindeki `*-setup-smoke.json` |
+| `Start-TVCare.cmd` çift tıklama → kurulum → arayüz | NOT_RUN | Etkileşimli Windows başlatıcı zinciri; yalnızca EXE smoke testi bu yolun kanıtı değildir |
+| `Install-Requirements.cmd` çift tıklama | NOT_RUN | Etkileşimli Windows başlatıcı yolu; komut dosyası statik testi kullanıcı akışının yerine geçmez |
+| Lisans reddi / indirme hatası / SHA-256 uyuşmazlığı | PASS | Yerel birim ve entegrasyon testleri. Hedef Windows paket kanıtı için ilgili commit CI sonucu ve `*-setup-smoke.json`; yalnızca raporlanan senaryoları kapsar |
+| Demo: ağ / indirme / gerçek ADB olmadan açılış | Sürüm raporuna bak | İlgili commit CI sonucu ve sürüm ekindeki smoke raporları; `.cmd` çift tıklama ayrıca yukarıda belirtilir |
+| ADB / Python / winget olmayan temiz Windows sanal makinesi | NOT_RUN | İlk kurulum internetli; sonraki açılış kullanılabilir ADB ile çevrimdışı |
+| 1.0.1 gerçek TV kabulü | NOT_RUN | Fiziksel cihaz ve bakım/geri alma doğrulaması yapılmadı |
+
+Otomatik Windows CI başarılı olsa bile temiz Windows sanal makinesinde kullanıcı akışı ve fiziksel TV kabulü ayrı kalır. Windows paketi yayıncı sertifikasıyla imzalı değildir; macOS noter onayı yoktur.
+
+## 1.0.0 doğrulama tabanı
+
+Tarih: 29 Eylül 2026. Ortam: macOS / Apple Silicon, Python 3.14.7. Aşağıdaki sonuçlar önceki sürümün mevcut kanıtıdır; 1.0.1 kurulum yoluna otomatik olarak aktarılmaz.
 
 | Kontrol | Sonuç | Kanıt / kapsam |
 | --- | --- | --- |
@@ -17,11 +38,11 @@ Tarih: 29 Eylül 2026. Ortam: macOS / Apple Silicon, Python 3.14.7. Bu kayıt se
 | Paket gizliliği | PASS | Özel anahtar / eski yedek / cihaz günlüğü dağıtımda yok; dosya SHA256 manifesti |
 | Yeni sürümün gerçek TV testi | NOT_RUN | Bu sürüm için yeni fiziksel TV kabul testi yapılmadı |
 | Yeni koruyucunun fiziksel açılış/kapanış testi | NOT_RUN | Fiziksel cihaz testi ayrıca gereklidir |
-| Yayıncı imzası / macOS noter onayı | NOT_RUN | Yerel paket dağıtımı; imzalı kamu yayını yapılmadı |
+| Yayıncı imzası / macOS noter onayı | NOT_RUN | Windows yayıncı sertifikası ve Apple noter onayı yok |
 
-## Herkese açık paketlerin güncel durumu
+## Paket kanıtlarını okumak
 
-Windows, Linux, macOS Apple Silicon ve macOS Intel paketlerinin hedef platformdaki test/derleme sonucu [GitHub Actions](https://github.com/paylanovic/TVCare/actions/workflows/ci.yml) kayıtlarında bulunur. Her pakette `BUILD.json` çalıştırılan/atlanan test sayılarını, `SMOKE.json` sentetik paket kontrolünü gösterir. Sürüm ekindeki `*-smoke.json` gerçek ZIP çıkarılarak yapılan kontrolü de içerir. Windows’ta POSIX bekçi testleri atlanabilir; bu atlamalar gizlenmez. Paket testi fiziksel TV kabulü değildir.
+Windows, Linux, macOS Apple Silicon ve macOS Intel paketleri için ilgili sürüm/commit hedef platform test ve derleme sonuçları [GitHub Actions](https://github.com/paylanovic/TVCare/actions/workflows/ci.yml) kayıtlarında bulunur. Her pakette `BUILD.json` çalıştırılan/atlanan test sayılarını, `SMOKE.json` sentetik paket kontrolünü gösterir. Sürüm ekindeki `*-smoke.json` gerçek ZIP çıkarılarak yapılan kontrolü de içerir. Windows’ta POSIX bekçi testleri atlanabilir; bu atlamalar gizlenmez. Paket testi fiziksel TV kabulü değildir.
 
 ## Tekrarlama
 

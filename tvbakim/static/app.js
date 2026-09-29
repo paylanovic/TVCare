@@ -61,7 +61,7 @@
   async function refreshStatus() {
     const data = await api('/api/status');
     $('#version').textContent = `TVCare ${data.version || ''}`; $('#demo-banner').hidden = !data.demo;
-    const adb = data.adb || {}; $('#adb-status').textContent = data.demo ? 'Örnek modunda bağlantı simüle edilir.' : adb.available ? 'ADB hazır. Cihazını seçerek bilgi kontrolünü başlat.' : 'ADB bulunamadı. Platform Tools kurulumunu kullanım rehberinden incele.';
+    const adb = data.adb || {}; $('#adb-status').textContent = data.demo ? 'Örnek modunda bağlantı simüle edilir.' : adb.available ? 'ADB hazır. Cihazını seçerek bilgi kontrolünü başlat.' : 'ADB bulunamadı. Windows’ta Install-Requirements.cmd dosyasını çalıştırıp TVCare’i yeniden aç. macOS/Linux için hızlı başlangıç rehberindeki Platform Tools adımlarını izle.';
     $('#adb-error').hidden = !adb.error; $('#adb-error').textContent = adb.error ? 'ADB hata ayrıntısı: ' + adb.error : '';
     devices(data.devices); if (data.history) { state.history = data.history; renderHistory(); }
     const pending = (data.jobs || []).filter(item => ['queued','running'].includes(item.status));

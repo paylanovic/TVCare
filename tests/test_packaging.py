@@ -43,6 +43,23 @@ class PackagingTests(unittest.TestCase):
             if os.name != 'nt':
                 self.assertTrue(os.access(demo, os.X_OK))
 
+    def test_windows_setup_must_succeed_before_normal_start(self):
+        with tempfile.TemporaryDirectory() as temp:
+            bundle = Path(temp)
+            with patch('scripts.build_release.os.name', 'nt'):
+                write_launchers(bundle)
+            start = (bundle / 'Start-TVCare.cmd').read_text(encoding='utf-8')
+            self.assertIn('--setup\nif errorlevel 1 goto failed\n:run\n"%~dp0TVCare.exe" %*', start)
+            self.assertIn('if /I "%~1"=="--demo" goto run', start)
+            self.assertNotIn('--accept-platform-tools-license', start)
+            setup = (bundle / 'Install-Requirements.cmd').read_text(encoding='utf-8')
+            self.assertIn('--setup %*', setup)
+            demo = (bundle / 'Demo-TVCare.cmd').read_text(encoding='utf-8')
+            self.assertIn('--demo', demo)
+            self.assertNotIn('--setup', demo)
+            for script in bundle.glob('*.cmd'):
+                self.assertIn(b'\r\n', script.read_bytes())
+
     def test_archive_rejects_path_traversal(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
