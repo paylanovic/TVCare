@@ -1,0 +1,38 @@
+name: Özellik öner / Feature request
+description: Bir ihtiyacı veya iyileştirme önerisini paylaş. / Suggest a useful improvement.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Öneriler herkese açıktır. Kişisel bilgi, ham cihaz logu, IP, seri numarası, oturum bağlantısı veya ADB anahtarı paylaşma.
+        Requests are public. Do not post personal information, raw device logs, IP addresses, serial numbers, session URLs, or ADB keys.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Hangi ihtiyacı karşılamalı? / What problem should this solve?
+      description: Yapmaya çalıştığın işi ve mevcut zorluğu anlat. / Describe your task and the current difficulty.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Önerilen davranış / Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Düşündüğün alternatifler / Alternatives considered
+  - type: input
+    id: context
+    attributes:
+      label: İlgili işletim sistemi veya TV modeli / Relevant OS or TV model
+      description: İsteğe bağlı. Seri numarası veya adres ekleme. / Optional. No serial numbers or addresses.
+  - type: checkboxes
+    id: privacy_review
+    attributes:
+      label: Paylaşım kontrolü / Sharing review
+      options:
+        - label: Bu öneriyi ve eklerini kendim kontrol ettim; kişisel bilgi, cihaz adresi/seri numarası veya anahtar içermiyor. / I personally reviewed this request and attachments; they contain no personal data, device addresses/serials, or keys.
+          required: true

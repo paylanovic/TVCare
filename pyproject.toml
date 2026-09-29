@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tvcare"
+version = "1.0.0"
+description = "Local, reversible Android TV maintenance"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+tvcare = "tvbakim.__main__:main"
+
+[tool.setuptools.package-data]
+tvbakim = ["static/*"]
+
+[tool.setuptools.packages.find]
+include = ["tvbakim*"]

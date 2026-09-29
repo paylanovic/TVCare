@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Hızlı başlangıç / Quick start
+    url: https://github.com/paylanovic/TVCare/blob/main/docs/QUICKSTART.md
+    about: İndirme, ADB kurulumu ve TV bağlantısı adımları. / Downloads, ADB setup, and TV connection steps.
+  - name: Desteklenen cihazlar / Supported devices
+    url: https://github.com/paylanovic/TVCare/blob/main/docs/DEVICE_SUPPORT.md
+    about: Bir sorun bildirmeden önce cihaz ve koruyucu desteğini incele. / Check device and guard compatibility before reporting a problem.

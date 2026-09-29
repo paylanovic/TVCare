@@ -1,0 +1,89 @@
+name: Hata bildir / Bug report
+description: TVCare ile ilgili tekrarlanabilir bir sorunu bildir. / Report a reproducible TVCare problem.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GitHub issue kayıtları herkese açıktır. Ham log, cihaz IP adresi, seri numarası, yerel kullanıcı yolu, oturum bağlantısı, eşleştirme kodu veya ADB özel anahtarı paylaşma. Uygulamanın sadeleştirilmiş destek raporunu bile paylaşmadan önce incele.
+
+        Issues are public. Do not post raw logs, device IP addresses, serial numbers, personal filesystem paths, session URLs, pairing codes, or ADB private keys. Review even the app's reduced support report before sharing.
+  - type: input
+    id: version
+    attributes:
+      label: TVCare sürümü / version
+      placeholder: 1.0.0 Public Preview
+    validations:
+      required: true
+  - type: dropdown
+    id: operating_system
+    attributes:
+      label: Bilgisayar işletim sistemi / Computer OS
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: os_details
+    attributes:
+      label: Sistem sürümü ve işlemci türü / OS version and CPU architecture
+      description: Kullanıcı adı veya bilgisayar adı ekleme. / Do not include usernames or computer names.
+      placeholder: Windows 11 x64 / macOS arm64 / Ubuntu x86_64
+    validations:
+      required: true
+  - type: dropdown
+    id: installation
+    attributes:
+      label: Nasıl çalıştırıyorsun? / How are you running TVCare?
+      options:
+        - Hazır ZIP paketi / Release ZIP
+        - Kaynak kod / Source code
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Hangi ortam? / Which environment?
+      options:
+        - Fiziksel TV / Physical TV
+        - Sentetik demo / Synthetic demo
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: TV marka, model ve Android sürümü / TV brand, model and Android version
+      description: Seri numarası, IP, MAC adresi veya hesap bilgisi yazma. Demo kullanıyorsan “demo” yaz. / No serial, IP, MAC, or account details. Enter “demo” if applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Tekrarlama adımları / Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: Beklenen ve görülen davranış / Expected and actual behavior
+      description: Görünen hata mesajını özel alanları çıkararak ekle. / Remove private fields from any error message.
+    validations:
+      required: true
+  - type: textarea
+    id: optional_evidence
+    attributes:
+      label: İsteğe bağlı sadeleştirilmiş rapor veya ekran görüntüsü / Optional reduced report or screenshot
+      description: Uygulamadaki rapor indirme seçeneğini kullan. Önce içeriğini kontrol et; ham log veya bütün veri klasörü yükleme. / Use the in-app report export. Review it first; do not upload raw logs or the full data folder.
+  - type: checkboxes
+    id: privacy_review
+    attributes:
+      label: Paylaşım kontrolü / Sharing review
+      options:
+        - label: Paylaştığım metin ve ekleri kendim kontrol ettim; kişisel bilgi, cihaz adresi/seri numarası, özel anahtar veya erişim anahtarı içermiyor. / I personally reviewed all text and attachments and removed personal data, device addresses/serials, private keys, and access tokens.
+          required: true
