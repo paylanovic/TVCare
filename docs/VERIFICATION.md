@@ -8,7 +8,7 @@ Yeni Windows ilk açılış akışı; mevcut ADB'yi kullanmayı veya kullanıcı
 
 | Kontrol | Sonuç | Kapsam |
 | --- | --- | --- |
-| Yerel 1.0.1 birim / entegrasyon ve regresyon testleri | PASS | 111 test başarılı; yaklaşık 8,9 saniye. Kurulum testleri dahil, Windows etkileşimli kullanıcı testi değildir |
+| Yerel 1.0.1 birim / entegrasyon ve regresyon testleri | PASS | 114 test başarılı; yaklaşık 10,3 saniye. Kurulum testleri dahil, Windows etkileşimli kullanıcı testi değildir |
 | Windows hedefinde CI test ve paket kontrolü | Sürüm raporuna bak | İlgili commit’in [CI sonucu](https://github.com/paylanovic/TVCare/actions/workflows/ci.yml), paketteki `BUILD.json` ve sürüm ekindeki `*-setup-smoke.json` |
 | `Start-TVCare.cmd` çift tıklama → kurulum → arayüz | NOT_RUN | Etkileşimli Windows başlatıcı zinciri; yalnızca EXE smoke testi bu yolun kanıtı değildir |
 | `Install-Requirements.cmd` çift tıklama | NOT_RUN | Etkileşimli Windows başlatıcı yolu; komut dosyası statik testi kullanıcı akışının yerine geçmez |

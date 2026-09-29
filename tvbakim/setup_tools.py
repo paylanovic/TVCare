@@ -107,8 +107,11 @@ def verify_archive(archive):
 
 def _member_path(info):
     name = info.filename
-    if (not name or "\x00" in info.orig_filename or any(char in name for char in '\\:<>"|?*') or name.startswith("/")
-            or any(ord(char) < 32 for char in name)):
+    # ZipInfo normalizes backslashes to separators on Windows. Inspect the
+    # original ZIP name first, or an unsafe raw path could appear normalized.
+    original = info.orig_filename
+    if (not name or "\x00" in original or any(char in original for char in '\\:<>"|?*') or original.startswith("/")
+            or any(ord(char) < 32 for char in original)):
         raise SetupError("Arşivde güvenli olmayan bir dosya yolu var.")
     raw_parts = name.rstrip("/").split("/")
     if any(part in {"", ".", ".."} or part.endswith((".", " ")) or part.split(".")[0].upper() in WINDOWS_RESERVED for part in raw_parts):

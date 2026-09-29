@@ -26,7 +26,15 @@ def fixture_archive(extra=(), omitted=()):
             content = ("Pkg.Revision=" + setup.PLATFORM_TOOLS_VERSION + "\n").encode() if name == "source.properties" else b"synthetic fixture - not executable"
             archive.writestr("platform-tools/" + name, content)
         for name, content in extra:
-            archive.writestr(name, content)
+            if isinstance(name, str):
+                # Preserve malicious raw names on every host. ZipInfo's
+                # constructor normalizes os.sep on Windows; the writer must
+                # emit the original bytes to exercise the reader's defense.
+                member = zipfile.ZipInfo(name)
+                member.filename = name
+            else:
+                member = name
+            archive.writestr(member, content)
     return stream.getvalue()
 
 
@@ -206,6 +214,28 @@ class ArchiveSafetyTests(unittest.TestCase):
         member.external_attr = (stat.S_IFLNK | 0o777) << 16
         with self.assertRaises(setup.SetupError):
             self.extract(fixture_archive([(member, b"../../outside")]))
+
+    def test_original_backslash_name_rejected_even_when_windows_normalized(self):
+        member = zipfile.ZipInfo("platform-tools/escape")
+        member.orig_filename = "platform-tools\\escape"
+        self.assertEqual(member.filename, "platform-tools/escape")
+        with self.assertRaises(setup.SetupError):
+            setup._member_path(member)
+
+    def test_fixture_contains_raw_backslash_zip_name(self):
+        payload = fixture_archive([("platform-tools\\escape", b"malicious")])
+        self.assertIn(b"platform-tools\\escape", payload)
+        with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+            self.assertIn("platform-tools\\escape", [info.orig_filename for info in archive.infolist()])
+
+    def test_windows_zipinfo_normalization_cannot_bypass_backslash_check(self):
+        with patch.object(zipfile.os, "sep", "\\"):
+            payload = fixture_archive([("platform-tools\\escape", b"malicious")])
+            with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+                member = next(info for info in archive.infolist() if info.orig_filename == "platform-tools\\escape")
+                self.assertEqual(member.filename, "platform-tools/escape")
+                with self.assertRaises(setup.SetupError):
+                    setup._member_path(member)
 
     def test_missing_required_dll_and_wrong_properties_rejected(self):
         with self.assertRaisesRegex(setup.SetupError, "DLL"):
