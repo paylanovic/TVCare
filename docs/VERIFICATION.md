@@ -17,9 +17,11 @@ Tarih: 29 Eylül 2026. Ortam: macOS / Apple Silicon, Python 3.14.7. Bu kayıt se
 | Paket gizliliği | PASS | Özel anahtar / eski yedek / cihaz günlüğü dağıtımda yok; dosya SHA256 manifesti |
 | Yeni sürümün gerçek TV testi | NOT_RUN | Bu sürüm için yeni fiziksel TV kabul testi yapılmadı |
 | Yeni koruyucunun fiziksel açılış/kapanış testi | NOT_RUN | Fiziksel cihaz testi ayrıca gereklidir |
-| Windows / Linux paket çalıştırma | NOT_RUN | Başlatıcı ve CI tarifleri hazır; hedef OS'lerde çalıştırma sonucu yok |
-| Uzak CI | NOT_RUN | İş akışı dosyası hazır, repo yayımlanmadı ve CI tetiklenmedi |
 | Yayıncı imzası / macOS noter onayı | NOT_RUN | Yerel paket dağıtımı; imzalı kamu yayını yapılmadı |
+
+## Herkese açık paketlerin güncel durumu
+
+Windows, Linux, macOS Apple Silicon ve macOS Intel paketlerinin hedef platformdaki test/derleme sonucu [GitHub Actions](https://github.com/paylanovic/TVCare/actions/workflows/ci.yml) kayıtlarında bulunur. Her pakette `BUILD.json` çalıştırılan/atlanan test sayılarını, `SMOKE.json` sentetik paket kontrolünü gösterir. Sürüm ekindeki `*-smoke.json` gerçek ZIP çıkarılarak yapılan kontrolü de içerir. Windows’ta POSIX bekçi testleri atlanabilir; bu atlamalar gizlenmez. Paket testi fiziksel TV kabulü değildir.
 
 ## Tekrarlama
 

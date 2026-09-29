@@ -109,6 +109,17 @@ def main(argv=None):
         source = ROOT / name
         if source.exists():
             shutil.copy2(source, bundle / name)
+    license_source = ROOT / 'third_party' / 'licenses'
+    license_manifest = json.loads((license_source / 'SOURCES.json').read_text(encoding='utf-8'))
+    for notice in license_manifest['sources']:
+        source = license_source / notice['file']
+        if source.parent != license_source or hashlib.sha256(source.read_bytes()).hexdigest() != notice['sha256']:
+            raise RuntimeError('An upstream runtime license notice is missing or has changed.')
+    license_target = bundle / 'third_party' / 'licenses'
+    license_target.mkdir(parents=True, exist_ok=True)
+    for source in sorted(license_source.iterdir()):
+        if source.is_file() and not source.is_symlink() and source.suffix in {'.txt', '.rst', '.md', '.json'}:
+            shutil.copy2(source, license_target / source.name)
     docs = bundle / 'docs'
     docs.mkdir(exist_ok=True)
     for source in sorted((ROOT / 'docs').glob('*.md')):

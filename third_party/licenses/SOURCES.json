@@ -1,0 +1,98 @@
+{
+  "retrieved_on": "2026-09-29",
+  "sources": [
+    {
+      "file": "PYTHON-3.12-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.12/LICENSE",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    },
+    {
+      "file": "PYTHON-3.12-THIRD-PARTY.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.12/Doc/license.rst",
+      "sha256": "341832873fd316a37927e79385093fbbfd40a467428480835fe435a80cadf4e5",
+      "bytes": 54130
+    },
+    {
+      "file": "PYTHON-3.14-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.14/LICENSE",
+      "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231",
+      "bytes": 13804
+    },
+    {
+      "file": "PYTHON-3.14-THIRD-PARTY.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.14/Doc/license.rst",
+      "sha256": "cd6f471c0bfdb099efefc25ddff9b3df8bf62e10428987f1f05e6f2f9e35d563",
+      "bytes": 60039
+    },
+    {
+      "file": "PYINSTALLER-COPYING.txt",
+      "url": "https://raw.githubusercontent.com/pyinstaller/pyinstaller/v6.22.3/COPYING.txt",
+      "sha256": "0598064c7d2718e38d7914a7d08343b2fa008e3bea9ebba2aa7a6ffa5900dd64",
+      "bytes": 32604
+    },
+    {
+      "file": "OPENSSL-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.0.0/LICENSE.txt",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "bytes": 10175
+    },
+    {
+      "file": "LIBFFI-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/libffi/libffi/v3.4.8/LICENSE",
+      "sha256": "67894089811f93fca47a76f85e017da6f8582d4ba0905963c6e0f1ad6df7a195",
+      "bytes": 1132
+    },
+    {
+      "file": "ZLIB-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/madler/zlib/v1.3.1/LICENSE",
+      "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "bytes": 1002
+    },
+    {
+      "file": "BZIP2-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/libarchive/bzip2/bzip2-1.0.8/LICENSE",
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+      "bytes": 1896
+    },
+    {
+      "file": "XZ-COPYING.txt",
+      "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.8.1/COPYING",
+      "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "bytes": 3119
+    },
+    {
+      "file": "XZ-COPYING.0BSD.txt",
+      "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.8.1/COPYING.0BSD",
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+      "bytes": 607
+    },
+    {
+      "file": "EXPAT-COPYING.txt",
+      "url": "https://raw.githubusercontent.com/libexpat/libexpat/R_2_7_1/expat/COPYING",
+      "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87",
+      "bytes": 1144
+    },
+    {
+      "file": "ZSTD-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/facebook/zstd/v1.5.7/LICENSE",
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "bytes": 1549
+    },
+    {
+      "file": "HACL-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.14/Modules/_hacl/Hacl_Hash_SHA2.c",
+      "extraction": "Unmodified leading license comment",
+      "sha256": "998ce04fb8ad9dedb0bc1b44938f8c3dcf1089780fa105ce1c8c30fb5554d78c",
+      "bytes": 1207
+    },
+    {
+      "file": "MPDEC-LICENSE.txt",
+      "url": "https://www.bytereef.org/software/mpdecimal/releases/mpdecimal-4.0.1.tar.gz",
+      "archive_member": "mpdecimal-4.0.1/COPYRIGHT.txt",
+      "archive_sha256": "96d33abb4bb0070c7be0fed4246cd38416188325f820468214471938545b1ac8",
+      "sha256": "dba079e24a0286052f9f36a5e0b4f6cc95bc83ada657eb26bef8c0b6473f6512",
+      "bytes": 1285
+    }
+  ]
+}

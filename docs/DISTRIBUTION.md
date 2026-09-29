@@ -55,4 +55,6 @@ Yayın veya yükleme bu derleme betiğinin parçası değildir.
 
 ## Otomasyon
 
-`.github/workflows/ci.yml` Windows, macOS ve Linux üzerinde test ve paket işlerini tanımlar. Bu dosyanın varlığı CI çalıştığı anlamına gelmez: uzak CI sonucu bu çalışma kapsamında `NOT_RUN` durumundadır. İş akışı canlı ADB cihazı kullanmaz; koruyucu APK'sını kaynaklara dahil edilmiş imzalı dosyadan taşır. Özel APK imza anahtarı CI'a veya kaynaklara eklenmez.
+`.github/workflows/ci.yml` Windows, macOS ve Linux üzerinde test ve paket işlerini tanımlar. Güncel sonuçlar GitHub Actions iş kayıtlarında bulunur; yalnızca başarılı hedeflerin paketleri yayımlanır. İş akışı canlı ADB cihazı kullanmaz; koruyucu APK'sını kaynaklara dahil edilmiş imzalı dosyadan taşır. Özel APK imza anahtarı CI'a veya kaynaklara eklenmez.
+
+macOS CI, upstream framework paketlerine gömülü kişisel derleme yollarını taşımamak için Homebrew `python@3.12` kullanır. Gizlilik taraması devre dışı bırakılmaz. Derleme ortamı geçici bir venv içindedir.
